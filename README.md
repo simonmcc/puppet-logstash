@@ -42,7 +42,7 @@ Then just apply the required classes to each node:
 
 ###Sample config for Ubuntu Precise (12.04)
 ```puppet
-lass { 'logstash::config':
+class { 'logstash::config':
   logstash_home          => '/opt/logstash',
   logstash_jar_provider  => 'http',             # pull down the jar over http
   logstash_transport     => 'redis',            # configure redis as the transport
