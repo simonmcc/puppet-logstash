@@ -29,9 +29,9 @@
 #
 class logstash::package(
   $logstash_home = '/opt/logstash',
-  $logstash_version = '1.1.1',
+  $logstash_version = $logstash::config::logstash_version,
   $logstash_provider = 'http',
-  $logstash_baseurl = 'http://semicomplete.com/files/logstash/',
+  $logstash_baseurl = 'https://logstash.objects.dreamhost.com/release',
   $java_provider = 'external',
   $java_package = 'java-1.6.0-openjdk' )
 {

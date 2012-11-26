@@ -23,7 +23,7 @@
 class logstash::shipper (
   $logstash_server ='localhost',
   $verbose = 'no',
-  $jarname ='logstash-1.1.0-monolithic.jar',
+  $jarname = "logstash-$logstash::config::logstash_version-monolithic.jar",
   # TODO This needs refactoring :)
   $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
 ) {
