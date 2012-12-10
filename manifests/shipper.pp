@@ -23,37 +23,24 @@
 class logstash::shipper (
   $logstash_server ='localhost',
   $verbose = 'no',
-  $jarname = "logstash-$logstash::config::logstash_version-monolithic.jar",
-  # TODO This needs refactoring :)
-  $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
+  $jarname ='logstash-1.1.0-monolithic.jar',
+  $config_strategy = 'logstash::shipper::defaultconfig',
+  $config_params = {
+    logfiles  => '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
+  }
 ) {
 
   # make sure the logstash::config & logstash::package classes are declared before logstash::shipper
   Class['logstash::config'] -> Class['logstash::shipper']
   Class['logstash::package'] -> Class['logstash::shipper']
 
-  # create the config file based on the transport we are using (this could also be extended to use different configs)
-  case  $logstash::config::logstash_transport {
-    /^redis$/: { $shipper_conf_content = template('logstash/shipper-input.conf.erb',
-                                                  'logstash/shipper-filter.conf.erb',
-                                                  'logstash/shipper-output-redis.conf.erb') }
-    /^amqp$/:  { $shipper_conf_content = template('logstash/shipper-input.conf.erb',
-                                                  'logstash/shipper-filter.conf.erb',
-                                                  'logstash/shipper-output-amqp.conf.erb') }
-    default:   { $shipper_conf_content = undef }
+  # Open the strategy for config file generating 
+
+  class { $config_strategy:
+    logstash_server => $logstash_server,
+    configfile      => '/etc/logstash/shipper.conf',
+    params          => $config_params
   }
-
-
-  file {'/etc/logstash/shipper.conf':
-    ensure  => 'file',
-    group   => '0',
-    mode    => '0644',
-    owner   => '0',
-    content => $shipper_conf_content
-  }
-
-  # make sure the logstash::config class is declared before logstash::indexer
-  Class['logstash::config'] -> Class['logstash::shipper']
 
   User  <| tag == 'logstash' |>
   Group <| tag == 'logstash' |>
@@ -67,14 +54,6 @@ class logstash::shipper (
     servicejar     => $logstash::package::jar,
     serviceargs    => " agent -f /etc/logstash/shipper.conf -l $logstash::config::logstash_log/shipper.log",
     java_home      => $logstash::config::java_home,
-    require	   => File['/etc/logstash/shipper.conf'],
-  }
-  
-  # directory of grok patterns
-  file { '/etc/logstash/grok.d':
-    ensure => directory,
-    recurse => remote,
-    source => 'puppet:///modules/logstash/grok.d/',
   }
 
   service { 'logstash-shipper':

@@ -1,4 +1,4 @@
 output {
-  # stdout { debug => true debug_format => "json"}
-  redis { host => "<%=scope.lookupvar('logstash::config::redis_host') %>" data_type => "list" key => "logstash" }
+  stdout { debug => true debug_format => "json" }
+  redis { host => "<%= scope.lookupvar('logstash::config::redis_host') %>" data_type => "list" key => "logstash" }
 }

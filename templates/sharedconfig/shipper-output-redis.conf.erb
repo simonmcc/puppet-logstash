@@ -1,0 +1,5 @@
+redis {
+  host => "<%= scope.lookupvar('logstash::config::redis_host') %>"
+  data_type => "list"
+  key => "logstash"
+}

@@ -2,7 +2,7 @@ input {
   file {
     type => "syslog"
     # Wildcards work here :)
-    path => [ <%= logfiles %> ]
+    path => [ <%= params['logfiles'] %> ]
   }
 
   # polaris apache error logs (with rolling datestamp filename via cronolog)
