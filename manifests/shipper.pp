@@ -56,11 +56,18 @@ class logstash::shipper (
     java_home      => $logstash::config::java_home,
   }
 
+  # directory of grok patterns
+  file { '/etc/logstash/grok.d':
+    ensure  => directory,
+    recurse => remote,
+    source  => 'puppet:///modules/logstash/grok.d/',
+  }
+
   service { 'logstash-shipper':
     ensure    => 'running',
     hasstatus => true,
     enable    => true,
-    require   => Logstash::Javainitscript['logstash-shipper'],
+    require   => [Logstash::Javainitscript['logstash-shipper'], File['/etc/logstash/grok.d']],
   }
 
 }
