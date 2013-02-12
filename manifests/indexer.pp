@@ -51,6 +51,7 @@ class logstash::indexer (
     mode    => '0644',
     owner   => '0',
     content => $indexer_conf_content,
+    notify  => Service['logstash-indexer'],
   }
 
   # startup script
