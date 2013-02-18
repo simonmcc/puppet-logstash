@@ -70,6 +70,7 @@ class logstash::indexer (
     hasstatus => true,
     enable    => true,
     require   => [ Logstash::Javainitscript['logstash-indexer'], Class['logstash::package'] ],
+    subscribe => Class['logstash::package'],
   }
 
   # if we're running with elasticsearch embedded, make sure the data dir exists

@@ -53,6 +53,7 @@ class logstash::server (
     ensure    => 'running',
     hasstatus => true,
     enable    => true,
+    subscribe => Class['logstash::package'],
   }
 
 }

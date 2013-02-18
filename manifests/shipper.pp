@@ -68,6 +68,7 @@ class logstash::shipper (
     hasstatus => true,
     enable    => true,
     require   => [Logstash::Javainitscript['logstash-shipper'], File['/etc/logstash/grok.d']],
+    subscribe => Class['logstash::package'],
   }
 
 }
