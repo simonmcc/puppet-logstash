@@ -75,10 +75,10 @@ class logstash::indexer (
   # if we're running with elasticsearch embedded, make sure the data dir exists
   if $logstash::config::elasticsearch_provider == 'embedded' {
     file { "${logstash::config::logstash_home}/data/elasticsearch":
-      ensure => directory,
-      owner  => $logstash::config::logstash_user,
-      group  => $logstash::config::logstash_group,
-      before => Service['logstash-indexer'],
+      ensure  => directory,
+      owner   => $logstash::config::logstash_user,
+      group   => $logstash::config::logstash_group,
+      before  => Service['logstash-indexer'],
       require => File["${logstash::config::logstash_home}/data"],
     }
 

@@ -1,13 +1,13 @@
 # templated java daemon script
 define logstash::javainitscript (
-  $servicename = $title,
   $serviceuser,
-  $servicegroup = $serviceuser,
   $servicehome,
-  $serviceuserhome = $servicehome,
   $servicelogfile,
   $servicejar,
   $serviceargs,
+  $servicename = $title,
+  $servicegroup = $serviceuser,
+  $serviceuserhome = $servicehome,
   $java_home = '/usr/lib/jvm/jre-1.6.0-openjdk.x86_64'
 ) {
 

@@ -34,7 +34,7 @@ class logstash::shipper (
   Class['logstash::config'] -> Class['logstash::shipper']
   Class['logstash::package'] -> Class['logstash::shipper']
 
-  # Open the strategy for config file generating 
+  # Open the strategy for config file generating
 
   class { $config_strategy:
     logstash_server => $logstash_server,
@@ -50,9 +50,9 @@ class logstash::shipper (
     serviceuser    => 'root',
     servicegroup   => 'root',
     servicehome    => $logstash::config::logstash_home,
-    servicelogfile => "$logstash::config::logstash_log/shipper.log",
+    servicelogfile => "${logstash::config::logstash_log}/shipper.log",
     servicejar     => $logstash::package::jar,
-    serviceargs    => " agent -f /etc/logstash/shipper.conf -l $logstash::config::logstash_log/shipper.log",
+    serviceargs    => " agent -f /etc/logstash/shipper.conf -l ${logstash::config::logstash_log}/shipper.log",
     java_home      => $logstash::config::java_home,
   }
 
