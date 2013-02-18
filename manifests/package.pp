@@ -28,12 +28,12 @@
 # * Add better support for other ways providing the jar file?
 #
 class logstash::package(
-  $logstash_home = '/opt/logstash',
-  $logstash_version = $logstash::config::logstash_version,
-  $logstash_provider = 'http',
-  $logstash_baseurl = 'https://logstash.objects.dreamhost.com/release',
-  $java_provider = 'external',
-  $java_package = 'java-1.6.0-openjdk' )
+  $logstash_home      = '/opt/logstash',
+  $logstash_version   = $logstash::config::logstash_version,
+  $logstash_provider  = 'http',
+  $logstash_baseurl   = 'https://logstash.objects.dreamhost.com/release',
+  $java_provider      = 'external',
+  $java_package       = 'java-1.6.0-openjdk' )
 {
 
   # naughtly, the logstash::config class creates the $logstash_home directory,

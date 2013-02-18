@@ -21,13 +21,13 @@
 # * Update documentation
 #
 class logstash::shipper (
-  $logstash_server ='localhost',
-  $verbose = 'no',
-  $jarname ='logstash-1.1.0-monolithic.jar',
-  $config_strategy = 'logstash::shipper::defaultconfig',
-  $config_params = {
-    logfiles  => '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
-  }
+  $logstash_server  ='localhost',
+  $verbose          = 'no',
+  $jarname          ='logstash-1.1.0-monolithic.jar',
+  $config_strategy  = 'logstash::shipper::defaultconfig',
+  $config_params    = {
+                      logfiles  => '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
+                    }
 ) {
 
   # make sure the logstash::config & logstash::package classes are declared before logstash::shipper
