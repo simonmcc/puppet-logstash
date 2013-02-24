@@ -27,6 +27,8 @@ class logstash::config( $logstash_home = '/usr/local/logstash',
   $logstash_verbose = 'no',
   $logstash_user  = 'logstash',
   $logstash_group = 'logstash',
+  $logstash_uid = '3300',
+  $logstash_gid = '3300',
   $elasticsearch_provider = 'external',
   $elasticsearch_host = '127.0.0.1',
   $redis_provider = 'external',
@@ -43,6 +45,8 @@ class logstash::config( $logstash_home = '/usr/local/logstash',
   # just trying to make the fq variable a little less rediculous
   $user = $logstash_user
   $group = $logstash_group
+  $uid = $logstash_uid
+  $gid = $logstash_gid
 
   # create parent directory and all folders beneath it.
   file { $logstash_home:

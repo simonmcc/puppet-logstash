@@ -23,12 +23,12 @@ class logstash::user (
   @user { $logstash::config::user:
     comment => 'logstash system account',
     tag     => 'logstash',
-    uid     => '3300',
+    uid     => $logstash::config::uid,
     home    => "${logstash_homeroot}/logstash";
   }
 
   @group { $logstash::config::group:
-    gid => '3300',
+    gid => $logstash::config::gid,
     tag => 'logstash';
   }
 }
