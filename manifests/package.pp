@@ -40,8 +40,8 @@ class logstash::package(
   # make sure the directory exists!
   Class['logstash::config'] -> Class['logstash::package']
 
-  $logstash_jar = sprintf("%s-%s-%s", "logstash", $logstash_version, "monolithic.jar")
-  $jar = "$logstash_home/$logstash_jar"
+  $logstash_jar = sprintf('%s-%s-%s', 'logstash', $logstash_version, 'monolithic.jar')
+  $jar = "${logstash_home}/${logstash_jar}"
 
   # put the logstash jar somewhere
   # logstash_provider = package|puppet|http
@@ -59,36 +59,36 @@ class logstash::package(
   # You'll need to drop the jar in place on your puppetmaster
   # (puppetmaster file sharing isn't a great way to shift 50Mb+ files around)
   if $logstash_provider == 'puppet' {
-    file { "$logstash_home/$logstash_jar":
+    file { "${logstash_home}/${logstash_jar}":
       ensure => present,
-      source => "puppet:///modules/logstash/$logstash_jar",
+      source => "puppet:///modules/logstash/${logstash_jar}",
     }
   }
 
   if $logstash_provider == 'http' {
-    $logstash_url = "$logstash_baseurl/$logstash_jar"
+    $logstash_url = "${logstash_baseurl}/${logstash_jar}"
 
     if (!defined(Package['curl'])) {
       package { 'curl': }
     }
 
     # pull in the logstash jar over http
-    exec { "curl -o $logstash_home/$logstash_jar $logstash_url":
+    exec { "curl -o ${logstash_home}/${logstash_jar} ${logstash_url}":
       timeout => 0,
-      cwd     => "/tmp",
-      creates => "$logstash_home/$logstash_jar",
-      path    => ["/usr/bin", "/usr/sbin"],
+      cwd     => '/tmp',
+      creates => "${logstash_home}/${logstash_jar}",
+      path    => ['/usr/bin', '/usr/sbin'],
       require => Package['curl'],
     }
   }
 
   if $logstash_provider == 'external' {
-    notify { "It's up to you to provde $logstash_jar": }
+    notify { "It's up to you to provde ${logstash_jar}": }
   }
 
   # can't do anything without a java runtime, so we might as well
   # have a hook for pulling it in
   if $java_provider == 'package' {
-    package { "$java_package": }
+    package { $java_package: }
   }
 }

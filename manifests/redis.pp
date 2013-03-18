@@ -33,7 +33,7 @@ class logstash::redis (
     $redis_package = $logstash::config::redis_version ? {
       /\d+./    => $::operatingsystem ? {
         debian  => "${logstash::config::redis_package}=${logstash::config::redis_version}",
-        default => "${logstash::config::redis_package}-${logstash::config::redis_version}" 
+        default => "${logstash::config::redis_package}-${logstash::config::redis_version}"
       },
       default => $logstash::config::redis_package,
     }
@@ -44,23 +44,23 @@ class logstash::redis (
 
 
     # operatingsystem specific file & service names
-    case $operatingsystem {
+    case $::operatingsystem {
       centos, redhat, OEL: { $redis_conf = '/etc/redis.conf'
                         $redis_service = 'redis' }
       ubuntu, debian: { $redis_conf = '/etc/redis/redis.conf'
                         $redis_service = 'redis-server' }
-      default: { fail("Unsupportted operating system ($operatingsystem)") }
+      default: { fail("Unsupportted operating system (${::operatingsystem})") }
     }
 
     # our redis config file
-    file { "$redis_conf":
+    file { $redis_conf:
       ensure  => present,
       content => template('logstash/redis.conf.erb'),
       require => Package[$redis_package],
     }
 
     # make sure the service is defined & running
-    service { "$redis_service":
+    service { $redis_service:
       ensure    => 'running',
       hasstatus => true,
       enable    => true,

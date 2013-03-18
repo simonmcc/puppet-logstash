@@ -63,11 +63,11 @@ class logstash::config( $logstash_home = '/usr/local/logstash',
     require => File[$logstash_home],
   }
 
-  file { "$logstash_etc":
+  file { $logstash_etc:
     ensure  => 'directory',
   }
 
-  file { "$logstash_log":
+  file { $logstash_log:
     ensure   => 'directory',
     recurse  => true,
   }
