@@ -40,6 +40,9 @@ class logstash::indexer (
     /^amqp$/:  { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
                                                   'logstash/indexer-filter.conf.erb',
                                                   'logstash/indexer-output.conf.erb') }
+    /^log4j$/:  { $indexer_conf_content = template('logstash/indexer-input-log4j.conf.erb',
+                                                  'logstash/indexer-filter.conf.erb',
+                                                  'logstash/indexer-output.conf.erb') }
     default:   { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
                                                   'logstash/indexer-filter.conf.erb',
                                                   'logstash/indexer-output.conf.erb') }
