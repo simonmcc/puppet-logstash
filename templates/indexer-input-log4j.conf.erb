@@ -1,6 +1,5 @@
 input {
   log4j {
-    # ship logs to the 'rawlogs' fanout queue.
     type => "all"
     port => <%= scope.lookupvar('logstash::config::log4j_port') %>
   }
