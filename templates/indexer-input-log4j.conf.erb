@@ -1,0 +1,6 @@
+input {
+  log4j {
+    type => "all"
+    port => <%= scope.lookupvar('logstash::config::log4j_port') %>
+  }
+}
