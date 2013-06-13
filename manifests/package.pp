@@ -40,7 +40,7 @@ class logstash::package(
   # make sure the directory exists!
   Class['logstash::config'] -> Class['logstash::package']
 
-  $logstash_jar = sprintf("%s-%s-%s", "logstash", $logstash_version, "monolithic.jar")
+  $logstash_jar = sprintf("%s-%s-%s", "logstash", $logstash_version, "flatjar.jar")
   $jar = "$logstash_home/$logstash_jar"
 
   # put the logstash jar somewhere
