@@ -37,7 +37,7 @@ javaArgs="-jar <%=servicejar%> <%=serviceargs%>"      # arguments for Java launc
 javaCommandLine="$javaExe $javaArgs"                 # command line to start the Java service application
 javaCommandLineKeyword="<%=servicejar%>"             # a keyword that occurs on the commandline, used to detect an already 
 						     # running service process and to distinguish it from others
-SINCEDB_PATH=${applDir}				     # important for shipper to keep track of position
+export HOME=${applDir}				     # important for shipper to keep track of position, for rhel compatibility
  
 # Makes the file $1 writable by the group $serviceGroup.
 function makeFileWritable {
