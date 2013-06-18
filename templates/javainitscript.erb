@@ -75,6 +75,10 @@ function startServiceProcess {
    rm -f $pidFile
    makeFileWritable $pidFile || return 1
    makeFileWritable $serviceLogFile || return 1
+   <% if scope['logstash::config::elasticsearch_provider'] == 'embedded' and @servicename == 'logstash-indexer' %>
+     # Raise the max open files when using embedded elasticsearch
+     ulimit -n 32768 || return 1
+   <% end %>
    cmd="nohup $javaCommandLine >>$serviceLogFile 2>&1 & echo \$! >$pidFile"
    su -m $serviceUser -s $SHELL -c "$cmd" || return 1
    sleep 0.1
