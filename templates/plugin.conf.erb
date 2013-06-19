@@ -1,0 +1,9 @@
+  <%= @plugin %> {
+    <%- @config.each do |key,value| -%>
+    <%- if  value.kind_of?(Array) -%>
+    <%= key %> => ["<%= value[0] %>", "<%= value[1] %>"]
+    <%- else -%>
+    <%= key %> => "<%= value %>"
+    <%- end -%>
+  <%- end -%>
+  }
