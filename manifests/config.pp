@@ -40,7 +40,8 @@ class logstash::config( $logstash_home = '/usr/local/logstash',
   $redis_key = 'logstash',
   $java_provider = 'package',
   $java_package = 'java-1.6.0-openjdk',
-  $java_home = '/usr/lib/jvm/jre-1.6.0-openjdk.x86_64'
+  $java_home = '/usr/lib/jvm/jre-1.6.0-openjdk.x86_64',
+  $indexer_template = undef
 ) {
 
   # just trying to make the fq variable a little less rediculous
