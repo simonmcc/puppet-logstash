@@ -31,18 +31,21 @@ class logstash::indexer (
   $jarname = $logstash::config::logstash_jar
   $verbose = $logstash::config::logstash_verbose
 
-  # create the config file based on the transport we are using
-  # (this could also be extended to use different configs)
-  case  $logstash::config::logstash_transport {
-    /^redis$/: { $indexer_conf_content = template('logstash/indexer-input-redis.conf.erb',
-                                                  'logstash/indexer-filter.conf.erb',
-                                                  'logstash/indexer-output.conf.erb') }
-    /^amqp$/:  { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
-                                                  'logstash/indexer-filter.conf.erb',
-                                                  'logstash/indexer-output.conf.erb') }
-    default:   { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
-                                                  'logstash/indexer-filter.conf.erb',
-                                                  'logstash/indexer-output.conf.erb') }
+  if $logstash::config::indexer_template {
+    $indexer_conf_content = template($logstash::config::indexer_template)
+  }
+  else {
+    case  $logstash::config::logstash_transport {
+      /^redis$/: { $indexer_conf_content = template('logstash/indexer-input-redis.conf.erb',
+                                                    'logstash/indexer-filter.conf.erb',
+                                                    'logstash/indexer-output.conf.erb') }
+      /^amqp$/:  { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
+                                                    'logstash/indexer-filter.conf.erb',
+                                                    'logstash/indexer-output.conf.erb') }
+      default:   { $indexer_conf_content = template('logstash/indexer-input-amqp.conf.erb',
+                                                    'logstash/indexer-filter.conf.erb',
+                                                    'logstash/indexer-output.conf.erb') }
+    }
   }
 
   file { "${logstash::config::logstash_etc}/indexer.conf":
