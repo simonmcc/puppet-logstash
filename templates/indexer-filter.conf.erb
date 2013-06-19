@@ -2,41 +2,5 @@
 # mind that we're now using our own up patterns_dir which is managed by puppet
 
 filter {
- #  grok {
- #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
- #    match 		=> [ "wtf" ]
- #    type		=> "syslog"
- #    add_tag		=> 'wtf'
- #    add_field		=> [ "wtf", "%{@message}" ]
- #    break_on_match	=> true
- #    named_captures_only => true
- # } 
-  grok {
-    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-    type		=> "syslog"
-    pattern		=> "%{SYSLOGLINE}"
-    break_on_match	=> true
-    named_captures_only => true
-  }
-  grok {
-    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-    type		=> "apache-access"
-    pattern		=> "%{COMBINEDAPACHELOG}"
-    break_on_match	=> true
-    named_captures_only => true
-  }
-  date {
-    type => "syslog"
-    # The 'timestamp' and 'timestamp8601' names are for fields in the
-    # logstash event.  The 'SYSLOGLINE' grok pattern above includes a field
-    # named 'timestamp' that is set to the normal syslog timestamp if it
-    # exists in the event.
-    timestamp		=> "MMM  d HH:mm:ss"   # syslog 'day' value can be space-leading
-    timestamp		=> "MMM dd HH:mm:ss"
-    timestamp8601	=> ISO8601 # Some syslogs use ISO8601 time format
-  }
-  date {
-    type	=> "apache-access"
-    timestamp	=> "dd/MMM/yyyy:HH:mm:ss Z"
-  }
+
 }
