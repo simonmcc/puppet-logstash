@@ -22,7 +22,4 @@ define logstash::shipper::sharedconfig::add_config($template='', $order=1) {
       content => $content
     }
   }
-  else {
-    fail('logstash::shipper::sharedconfig is required for logstash::shipper:sharedconfig::add_config')
-  }
 }
