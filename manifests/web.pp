@@ -45,6 +45,7 @@ class logstash::web (
     hasstatus => true,
     enable    => true,
     require   => Logstash::Javainitscript['logstash-web'],
+    subscribe => Class['logstash::package'],
   }
 
 }
